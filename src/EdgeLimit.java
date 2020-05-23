@@ -1,4 +1,4 @@
 
-public class EdgeLimit {
+public class EdgeLimit extends Square{
 
 }

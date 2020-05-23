@@ -3,6 +3,6 @@
  * @author seanlee
  *
  */
-public class Tank {
+public class Tank extends Square{
 
 }
