@@ -12,6 +12,6 @@ public abstract class Square {
 	}
 	public void draw(Graphics g) {
 		g.setColor(color);
-		g.drawRect(col, row, 1, 1);
+		g.fillRect(col, row, 1, 1);
 	}
 }

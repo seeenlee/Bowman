@@ -11,9 +11,9 @@ public class BowmanGame {
 	private JFrame frame = new JFrame("Bowman");
 	private JPanel panel;
 	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
-	private final static int LENGTH = 801;
-	private final static int HEIGHT = 601;
-	private final Dimension DIM = new Dimension(LENGTH + OFFSET_X,HEIGHT + OFFSET_Y);
+	private final static int LENGTH = 1500;
+	private final static int HEIGHT = 600;
+	private final Dimension DIM = new Dimension(LENGTH,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
 	
 	public static void main(String[] args) {
@@ -29,6 +29,7 @@ public class BowmanGame {
 	}
 
 	private void start() {
+		BowmanWorld.setUpGame();
 		panel = new JPanel() {
 			@Override 
 			public void paintComponent(Graphics g) {
