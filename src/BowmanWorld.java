@@ -8,6 +8,11 @@ public class BowmanWorld {
 		grid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
 	}
 
+	/**
+	 * Fills in the grid with all the possible blocks
+	 * Currently it only fills with edgelimits, air, ground, and tanks
+	 * I need to work on filling with barrel
+	 */
 	public static void setUpGame() {
 		for(int r = 0; r < grid.length; r++) {
 			for(int c = 0; c < grid[r].length; c++) {

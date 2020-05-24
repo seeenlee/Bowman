@@ -16,18 +16,34 @@ public class BowmanGame {
 	private final Dimension DIM = new Dimension(LENGTH,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
 	
+	/**
+	 * This method exists purely to call start
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		new BowmanGame().start();
 	}
 	
+	/**
+	 * Getter for the horizontal length of the world
+	 * @return
+	 */
 	public static int getLength() {
 		return LENGTH;
 	}
 	
+	/**
+	 * getter for the vertical height of the world
+	 * @return
+	 */
 	public static int getHeight() {
 		return HEIGHT;
 	}
 
+	/**
+	 * It first sets up the game for the user to begin playing and then records all further actions
+	 * I don't actually know what all these commands do
+	 */
 	private void start() {
 		BowmanWorld.setUpGame();
 		panel = new JPanel() {
