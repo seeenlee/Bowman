@@ -14,6 +14,13 @@ public class BowmanWorld {
 	 * I need to work on filling with barrel
 	 */
 	public static void setUpGame() {
+		createEdgeLimitsAndFillWithAir();
+		createGround(groundLevel);
+		createTank(100);
+		createTank(1100);
+	}
+
+	private static void createEdgeLimitsAndFillWithAir() {
 		for(int r = 0; r < grid.length; r++) {
 			for(int c = 0; c < grid[r].length; c++) {
 				if(r == 0 || c == 0 || r == grid.length - 1|| c == grid[r].length - 1) {
@@ -24,39 +31,27 @@ public class BowmanWorld {
 				}
 			}
 		}
-		
-		for(int r = groundLevel; r < groundLevel + 10; r++) {
+	}
+	private static void createTank(int first) {
+		for(int r = groundLevel - 50; r < groundLevel; r++) {
+			for(int c = first; c < first + 200; c++) {
+				grid[r][c] = new Tank(r,c);
+			}
+		}
+		for(int r = groundLevel - 100; r < groundLevel - 50; r++) {
+			for(int c = first + 60; c < first + 140; c++) {
+				grid[r][c] = new Tank(r,c);
+			}
+		}
+	}
+
+	private static void createGround(int gL) {
+		for(int r = gL; r < gL + 10; r++) {
 			for(int c = 0; c < grid[0].length; c++) {
 				grid[r][c] = new Ground(r,c);
 			}
 		}
-		for(int r = groundLevel - 50; r < groundLevel; r++) {
-			for(int c = 100; c < 300; c++) {
-				grid[r][c] = new Tank(r,c);
-			}
-		}
-		for(int r = groundLevel - 100; r < groundLevel - 50; r++) {
-			for(int c = 160; c < 240; c++) {
-				grid[r][c] = new Tank(r,c);
-			}
-		}
-		
-		
-		for(int r = groundLevel - 50; r < groundLevel; r++) {
-			for(int c = 1100; c < 1300; c++) {
-				grid[r][c] = new Tank(r,c);
-			}
-		}
-		for(int r = groundLevel - 100; r < groundLevel - 50; r++) {
-			for(int c = 1160; c < 1240; c++) {
-				grid[r][c] = new Tank(r,c);
-			}
-		}
-		
-		
 	}
-
-
 
 	public void draw(Graphics g) {
 		for(int r = 0; r < grid.length; r++) {
@@ -73,7 +68,13 @@ public class BowmanWorld {
 
 
 	public void justClicked(MouseEvent me) {
-		// TODO Auto-generated method stub
+	}
+	
 
+	public void draggedAt(MouseEvent me) {
+		System.out.println(me);
+	}
+
+	public void releasedAt(MouseEvent me) {
 	}
 }

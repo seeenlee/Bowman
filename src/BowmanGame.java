@@ -1,13 +1,16 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class BowmanGame {
+public class BowmanGame implements ActionListener {
 	private JFrame frame = new JFrame("Bowman");
 	private JPanel panel;
 	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
@@ -15,6 +18,8 @@ public class BowmanGame {
 	private final static int HEIGHT = 600;
 	private final Dimension DIM = new Dimension(LENGTH,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
+	private final int FPS = 10;
+	public Timer timer = new Timer(1000 / FPS, this);
 	
 	/**
 	 * This method exists purely to call start
@@ -46,6 +51,7 @@ public class BowmanGame {
 	 */
 	private void start() {
 		BowmanWorld.setUpGame();
+		timer.start();
 		panel = new JPanel() {
 			@Override 
 			public void paintComponent(Graphics g) {
@@ -59,6 +65,16 @@ public class BowmanGame {
 			public void mousePressed(MouseEvent me) {
 				clickedAt(me);
 			}
+			
+			@Override
+			public void mouseReleased(MouseEvent me) {
+				releasedAt(me);
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent me) {
+				draggedAt(me);
+			}
 		});
 		panel.setPreferredSize(DIM);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -67,9 +83,26 @@ public class BowmanGame {
 		frame.setVisible(true);
 		panel.repaint();
 	}
+	
+	protected void draggedAt(MouseEvent me) {
+		world.draggedAt(me);
+		System.out.println("this happened");
+	}
+
+	protected void releasedAt(MouseEvent me) {
+		world.releasedAt(me);
+	}
+	
+	/**
+	 * This method checks if the FPS time limit has passed and then repaints the screen
+	 */
+	public void actionPerformed(ActionEvent ev){
+	    if(ev.getSource()==timer){
+	    	panel.repaint();
+	    }
+	}
+	    
 	protected void clickedAt(MouseEvent me) {
-		System.out.println("You just clicked "+me);	
 		world.justClicked(me);
-		panel.repaint();
 	}
 }
