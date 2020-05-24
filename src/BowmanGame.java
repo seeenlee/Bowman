@@ -14,9 +14,9 @@ public class BowmanGame implements ActionListener {
 	private JFrame frame = new JFrame("Bowman");
 	private JPanel panel;
 	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
-	private final static int LENGTH = 1500;
+	private final static int LENGTH = 2000;
 	private final static int HEIGHT = 600;
-	private final Dimension DIM = new Dimension(LENGTH,HEIGHT);
+	private final Dimension DIM = new Dimension(LENGTH - 1200,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
 	private final int FPS = 10;
 	public Timer timer = new Timer(1000 / FPS, this);

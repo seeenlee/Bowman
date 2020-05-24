@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 public class BowmanWorld {
 	private static Square[][] grid;
 	private final static int groundLevel = 550;
+	private boolean p1 = true; //this tells you whether it is player one's turn or player 2
+	public int left = 0;
 	public BowmanWorld() {
 		grid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
 	}
@@ -16,8 +18,8 @@ public class BowmanWorld {
 	public static void setUpGame() {
 		createEdgeLimitsAndFillWithAir();
 		createGround(groundLevel);
-		createTank(100);
-		createTank(1100);
+		createTank(325);
+		createTank(1775);
 	}
 
 	private static void createEdgeLimitsAndFillWithAir() {
@@ -33,13 +35,13 @@ public class BowmanWorld {
 		}
 	}
 	private static void createTank(int first) {
-		for(int r = groundLevel - 50; r < groundLevel; r++) {
-			for(int c = first; c < first + 200; c++) {
+		for(int r = groundLevel - 20; r < groundLevel; r++) {
+			for(int c = first; c < first + 100; c++) {
 				grid[r][c] = new Tank(r,c);
 			}
 		}
-		for(int r = groundLevel - 100; r < groundLevel - 50; r++) {
-			for(int c = first + 60; c < first + 140; c++) {
+		for(int r = groundLevel - 40; r < groundLevel - 20; r++) {
+			for(int c = first + 30; c < first + 70; c++) {
 				grid[r][c] = new Tank(r,c);
 			}
 		}
@@ -55,7 +57,7 @@ public class BowmanWorld {
 
 	public void draw(Graphics g) {
 		for(int r = 0; r < grid.length; r++) {
-			for( int c = 0; c < grid[r].length; c++) {
+			for( int c = left; c < left + 800; c++) {
 				if(grid[r][c] == null) {
 					System.out.println(r + " " + c);
 				}
@@ -66,15 +68,27 @@ public class BowmanWorld {
 		}
 	}
 
-
+	private int clickX;
+	private int clickY;
 	public void justClicked(MouseEvent me) {
+		clickX = me.getX();
+		clickY = me.getY();
 	}
 	
 
 	public void draggedAt(MouseEvent me) {
 		System.out.println(me);
 	}
-
+	
+	public int releaseX;
+	private int releaseY;
 	public void releasedAt(MouseEvent me) {
+		releaseX = me.getX();
+		releaseY = me.getY();
+		shootRocket();
+	}
+
+	private void shootRocket() {
+		
 	}
 }
