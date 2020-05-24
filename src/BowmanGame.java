@@ -10,11 +10,22 @@ import javax.swing.JPanel;
 public class BowmanGame {
 	private JFrame frame = new JFrame("Bowman");
 	private JPanel panel;
-	private final Dimension DIM = new Dimension(800,600);
+	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
+	private final int LENGTH = 800;
+	private final int HEIGHT = 600;
+	private final Dimension DIM = new Dimension(LENGTH + OFFSET_X,HEIGHT + OFFSET_Y);
 	private BowmanWorld world = new BowmanWorld();
 	
 	public static void main(String[] args) {
 		new BowmanGame().start();
+	}
+	
+	public int getLength() {
+		return LENGTH;
+	}
+	
+	public int getHeight() {
+		return HEIGHT;
 	}
 
 	private void start() {
@@ -44,6 +55,4 @@ public class BowmanGame {
 		world.justClicked(me);
 		panel.repaint();
 	}
-
-
 }
