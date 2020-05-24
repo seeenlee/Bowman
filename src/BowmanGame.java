@@ -20,7 +20,7 @@ public class BowmanGame implements ActionListener {
 	private BowmanWorld world = new BowmanWorld();
 	private final int FPS = 10;
 	public Timer timer = new Timer(1000 / FPS, this);
-	
+
 	/**
 	 * This method exists purely to call start
 	 * @param args
@@ -28,7 +28,7 @@ public class BowmanGame implements ActionListener {
 	public static void main(String[] args) {
 		new BowmanGame().start();
 	}
-	
+
 	/**
 	 * Getter for the horizontal length of the world
 	 * @return
@@ -36,7 +36,7 @@ public class BowmanGame implements ActionListener {
 	public static int getLength() {
 		return LENGTH;
 	}
-	
+
 	/**
 	 * getter for the vertical height of the world
 	 * @return
@@ -65,12 +65,12 @@ public class BowmanGame implements ActionListener {
 			public void mousePressed(MouseEvent me) {
 				clickedAt(me);
 			}
-			
+
 			@Override
 			public void mouseReleased(MouseEvent me) {
 				releasedAt(me);
 			}
-			
+
 			@Override
 			public void mouseDragged(MouseEvent me) {
 				draggedAt(me);
@@ -83,7 +83,7 @@ public class BowmanGame implements ActionListener {
 		frame.setVisible(true);
 		panel.repaint();
 	}
-	
+
 	protected void draggedAt(MouseEvent me) {
 		world.draggedAt(me);
 		System.out.println("this happened");
@@ -92,16 +92,23 @@ public class BowmanGame implements ActionListener {
 	protected void releasedAt(MouseEvent me) {
 		world.releasedAt(me);
 	}
-	
+
 	/**
 	 * This method checks if the FPS time limit has passed and then repaints the screen
 	 */
 	public void actionPerformed(ActionEvent ev){
-	    if(ev.getSource()==timer){
-	    	panel.repaint();
-	    }
+		if(ev.getSource()==timer){
+			panel.repaint();
+			if(BowmanWorld.arrowShot == true) {
+				if(BowmanWorld.left == LENGTH - 800) {
+				}
+				else {
+					BowmanWorld.left += 25;
+				}
+			}
+		}
 	}
-	    
+
 	protected void clickedAt(MouseEvent me) {
 		world.justClicked(me);
 	}

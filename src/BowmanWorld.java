@@ -5,7 +5,8 @@ public class BowmanWorld {
 	private static Square[][] grid;
 	private final static int groundLevel = 550;
 	private boolean p1 = true; //this tells you whether it is player one's turn or player 2
-	public int left = 0;
+	public static int left = 0;
+	public static boolean arrowShot = false;;
 	public BowmanWorld() {
 		grid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
 	}
@@ -58,12 +59,7 @@ public class BowmanWorld {
 	public void draw(Graphics g) {
 		for(int r = 0; r < grid.length; r++) {
 			for( int c = left; c < left + 800; c++) {
-				if(grid[r][c] == null) {
-					System.out.println(r + " " + c);
-				}
-				else{
-					grid[r][c].draw(g);
-				}
+				grid[r][c].draw(g);
 			}
 		}
 	}
@@ -74,12 +70,12 @@ public class BowmanWorld {
 		clickX = me.getX();
 		clickY = me.getY();
 	}
-	
+
 
 	public void draggedAt(MouseEvent me) {
 		System.out.println(me);
 	}
-	
+
 	public int releaseX;
 	private int releaseY;
 	public void releasedAt(MouseEvent me) {
@@ -89,6 +85,10 @@ public class BowmanWorld {
 	}
 
 	private void shootRocket() {
-		
+		screenMove();
+	}
+
+	private void screenMove() {
+		arrowShot = true;
 	}
 }
