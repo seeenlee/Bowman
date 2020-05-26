@@ -7,6 +7,7 @@ public class BowmanWorld {
 	private final static int groundLevel = 550;
 	private boolean p1 = true; //this tells you whether it is player one's turn or player 2
 	public static int arrowXLocation = 325;
+	public static int arrowYLocation = groundLevel;
 	public static boolean arrowShot = false;;
 	public BowmanWorld() {
 		bigGrid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
@@ -68,14 +69,9 @@ public class BowmanWorld {
 	}
 
 	public void draw(Graphics g) {
-<<<<<<< HEAD
-		for(int r = 0; r < grid.length; r++) {
-			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
-				grid[r][c].draw(g);
-=======
 		updateGrid();
 		for(int r = 0; r < smallGrid.length; r++) {
-			for( int c = left; c < left + 800; c++) {
+			for( int c = arrowXLocation - 325; c < arrowXLocation +475; c++) {
 				smallGrid[r][c].draw(g);
 			}
 		}
@@ -83,20 +79,16 @@ public class BowmanWorld {
 
 	private void updateGrid() {
 		for(int r = 0; r < smallGrid.length; r++) {
-			for( int c = left; c < left + 800; c++) {
+			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
 				smallGrid[r][c] = bigGrid[r][c];
->>>>>>> 8e580ff579c93d989c33a06a2f72ba9024f8f767
 			}
 		}
 	}
 
-<<<<<<< HEAD
+
 	private static int clickX;
 	private static int clickY;
-=======
-	public int clickX;
-	public int clickY;
->>>>>>> 8e580ff579c93d989c33a06a2f72ba9024f8f767
+
 	public void justClicked(MouseEvent me) {
 		clickX = me.getX();
 		clickY = me.getY();
@@ -107,23 +99,22 @@ public class BowmanWorld {
 		System.out.println(me);
 	}
 
-<<<<<<< HEAD
+
 	private static int releaseX;
 	private static int releaseY;
-=======
-	public int releaseX;
-	public int releaseY;
->>>>>>> 8e580ff579c93d989c33a06a2f72ba9024f8f767
+
 	public void releasedAt(MouseEvent me) {
 		releaseX = me.getX();
 		releaseY = me.getY();
+		arrowShot = true;
 	}
 
-	private static int height = Math.abs(releaseY-clickY);
-	private static int  distance = Math.abs(releaseY-clickY);
-	public static int getAngle() {
-
-		return (int)(Math.atan(height/distance));
+	private static int height;
+	private static int  distance;
+	public static double getAngle() {
+		distance  = clickX - releaseX;
+		height = releaseY - clickY;
+		return Math.toDegrees(Math.atan(height + 0.0/distance));
 	}
 
 	public static int getSpeed() {
@@ -131,6 +122,16 @@ public class BowmanWorld {
 	}
 
 	public static void moveRocket() {
-		
+		arrowXLocation += Math.cos(getAngle()) * getSpeed() * (1/15);
+		arrowYLocation += Math.sin(getAngle()) * getSpeed() * (1/15);
+		drawRocket();
+	}
+
+	private static void drawRocket() {
+		for(int r = arrowYLocation - 5; r < arrowYLocation; r++) {
+			for(int c = arrowXLocation -5; c < arrowXLocation; c++) {
+				bigGrid[r][c] = new Rocket(r,c);
+			}
+		}
 	}
 }

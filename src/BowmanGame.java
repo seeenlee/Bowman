@@ -98,7 +98,9 @@ public class BowmanGame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent ev){
 		if(ev.getSource()==timer){
-			BowmanWorld.moveRocket();
+			if(BowmanWorld.arrowShot == true) {
+				BowmanWorld.moveRocket();
+			}
 			panel.repaint();
 			/*
 			if(BowmanWorld.arrowShot == true) {
