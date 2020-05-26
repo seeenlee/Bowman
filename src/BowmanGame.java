@@ -102,7 +102,11 @@ public class BowmanGame implements ActionListener {
 			panel.repaint();
 			/*
 			if(BowmanWorld.arrowShot == true) {
+<<<<<<< HEAD
 				if(BowmanWorld.arrowLocation == LENGTH - 800) {
+=======
+				if(BowmanWorld.left == 800) {
+>>>>>>> 8e580ff579c93d989c33a06a2f72ba9024f8f767
 				}
 				else {
 					BowmanWorld.arrowLocation += 25;
