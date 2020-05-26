@@ -8,7 +8,8 @@ public class BowmanWorld {
 	private boolean p1 = true; //this tells you whether it is player one's turn or player 2
 	public static int arrowXLocation = 325;
 	public static int arrowYLocation = groundLevel;
-	public static boolean arrowShot = false;;
+	public static boolean arrowShot = false;
+	public static int gravityCounter = 0;
 	public BowmanWorld() {
 		bigGrid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
 		smallGrid = new Square[BowmanGame.getHeight()][BowmanGame.getLength() - 1200];
@@ -72,17 +73,21 @@ public class BowmanWorld {
 		updateGrid();
 		for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = arrowXLocation - 325; c < arrowXLocation +475; c++) {
-				smallGrid[r][c].draw(g);
+				if(c < smallGrid[r].length) {
+					smallGrid[r][c].draw(g);
+				}
 			}
 		}
 	}
 
 	private void updateGrid() {
+		/*
 		for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
-				smallGrid[r][c] = bigGrid[r][c];
+					smallGrid[r][arrowXLocation - c] = bigGrid[r][c];
 			}
 		}
+		*/
 	}
 
 
@@ -114,16 +119,16 @@ public class BowmanWorld {
 	public static double getAngle() {
 		distance  = clickX - releaseX;
 		height = releaseY - clickY;
-		return Math.toDegrees(Math.atan(height + 0.0/distance));
+		return Math.atan(height + 0.0/distance);
 	}
 
-	public static int getSpeed() {
-		return (int)(Math.sqrt(height^2+distance^2));
+	public static double getSpeed() {
+		return Math.sqrt(height^2+distance^2);
 	}
 
 	public static void moveRocket() {
-		arrowXLocation += Math.cos(getAngle()) * getSpeed() * (1/15);
-		arrowYLocation += Math.sin(getAngle()) * getSpeed() * (1/15);
+		arrowXLocation += Math.cos(getAngle()) * getSpeed() * (1.0/15) * 1000;
+		arrowYLocation += Math.sin(getAngle()) * getSpeed() * (-1.0/15) - 9.8 * (gravityCounter/15.0);
 		drawRocket();
 	}
 
