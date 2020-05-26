@@ -1,5 +1,5 @@
 import java.awt.*;
-public class fire {
+public class Fire {
 public final double GRAVITY =-9.8;
 //dimensions of the projectile, I did 5 and 5 for now 
 public final int HEIGHT =5; // 
@@ -13,7 +13,7 @@ private double speedY;
 private boolean Visible;
 
 
-public fire(int x, int y, double speed, double angle) { // so the angle is the speed is a value that the user is probabaly going to decide but for now I just left it as somwthing that you enter when you call this method
+public Fire(int x, int y, double speed, double angle) { // so the angle is the speed is a value that the user is probabaly going to decide but for now I just left it as somwthing that you enter when you call this method
 	this.x = x;
 	this.y = y;
 	this.speedX = speed * Math.sin(angle); //physics is cool :)
@@ -25,7 +25,7 @@ public fire(int x, int y, double speed, double angle) { // so the angle is the s
 public void drawRocket() {
 	for(int r = x; r< x+WIDTH; r++) {
 		for(int c = y; c<c+HEIGHT; c++) {
-			BowmanWorld.getGrid()[x][y]= new Rocket(r,c); // I have no idea if this actually works, I just modeled it after the drawTank
+			//BowmanWorld.getGrid()[x][y]= new Rocket(r,c); // I have no idea if this actually works, I just modeled it after the drawTank
 		}
 	}
 	}

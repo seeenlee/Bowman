@@ -5,7 +5,7 @@ public class BowmanWorld {
 	private static Square[][] grid;
 	private final static int groundLevel = 550;
 	private boolean p1 = true; //this tells you whether it is player one's turn or player 2
-	public static int left = 0;
+	public static int arrowXLocation = 325;
 	public static boolean arrowShot = false;;
 	public BowmanWorld() {
 		grid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
@@ -19,7 +19,7 @@ public class BowmanWorld {
 	public static void setUpGame() {
 		createEdgeLimitsAndFillWithAir();
 		createGround(groundLevel);
-		createTank(325);
+		createTank(arrowXLocation);
 		createTank(1775);
 	}
 
@@ -58,14 +58,14 @@ public class BowmanWorld {
 
 	public void draw(Graphics g) {
 		for(int r = 0; r < grid.length; r++) {
-			for( int c = left; c < left + 800; c++) {
+			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
 				grid[r][c].draw(g);
 			}
 		}
 	}
 
-	private int clickX;
-	private int clickY;
+	private static int clickX;
+	private static int clickY;
 	public void justClicked(MouseEvent me) {
 		clickX = me.getX();
 		clickY = me.getY();
@@ -76,19 +76,25 @@ public class BowmanWorld {
 		System.out.println(me);
 	}
 
-	public int releaseX;
-	private int releaseY;
+	private static int releaseX;
+	private static int releaseY;
 	public void releasedAt(MouseEvent me) {
 		releaseX = me.getX();
 		releaseY = me.getY();
-		shootRocket();
 	}
 
-	private void shootRocket() {
-		screenMove();
+	private static int height = Math.abs(releaseY-clickY);
+	private static int  distance = Math.abs(releaseY-clickY);
+	public static int getAngle() {
+
+		return (int)(Math.atan(height/distance));
 	}
 
-	private void screenMove() {
-		arrowShot = true;
+	public static int getSpeed() {
+		return (int)(Math.sqrt(height^2+distance^2));
+	}
+
+	public static void moveRocket() {
+		
 	}
 }
