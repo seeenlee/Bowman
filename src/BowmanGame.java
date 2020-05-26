@@ -108,6 +108,7 @@ public class BowmanGame implements ActionListener {
 			}
 		}
 	}
+	
 
 	protected void clickedAt(MouseEvent me) {
 		world.justClicked(me);

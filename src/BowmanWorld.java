@@ -16,6 +16,10 @@ public class BowmanWorld {
 	 * Currently it only fills with edgelimits, air, ground, and tanks
 	 * I need to work on filling with barrel
 	 */
+	
+	public static Square[][] getGrid() { // i created this getter to help me with the fire class
+		return grid;
+	}
 	public static void setUpGame() {
 		createEdgeLimitsAndFillWithAir();
 		createGround(groundLevel);
@@ -63,9 +67,10 @@ public class BowmanWorld {
 			}
 		}
 	}
+	
 
-	private int clickX;
-	private int clickY;
+	private static int clickX;
+	private static int clickY;
 	public void justClicked(MouseEvent me) {
 		clickX = me.getX();
 		clickY = me.getY();
@@ -76,12 +81,25 @@ public class BowmanWorld {
 		System.out.println(me);
 	}
 
-	public int releaseX;
-	private int releaseY;
+	public static int releaseX;
+	private static int releaseY;
 	public void releasedAt(MouseEvent me) {
 		releaseX = me.getX();
 		releaseY = me.getY();
 		shootRocket();
+	}
+	// I added these to be able to access them in the SlingShot class
+	public static int getclickX() {
+		return clickX;
+	}
+	public static int getclickY() {
+		return clickY;
+	}
+	public static int getreleaseX() {
+		return releaseX;
+	}
+	public static int getreleaseY() {
+		return releaseY;
 	}
 
 	private void shootRocket() {

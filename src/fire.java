@@ -13,9 +13,11 @@ private double speedY;
 private boolean Visible;
 
 
-public fire(int x, int y, double speed, double angle) { // so the angle is the speed is a value that the user is probabaly going to decide but for now I just left it as somwthing that you enter when you call this method
+public fire(int x, int y) { // so the angle is the speed is a value that the user is probabaly going to decide but for now I just left it as somwthing that you enter when you call this method
 	this.x = x;
 	this.y = y;
+	int speed = SlingShot.getSpeed();
+	int angle = SlingShot.getAngle();
 	this.speedX = speed * Math.sin(angle); //physics is cool :)
 	this.speedY = speed * Math.cos(angle);
 	this.Visible =true;
