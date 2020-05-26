@@ -16,7 +16,7 @@ public class BowmanGame implements ActionListener {
 	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
 	private final static int LENGTH = 2000;
 	private final static int HEIGHT = 600;
-	private final Dimension DIM = new Dimension(LENGTH - 1200,HEIGHT);
+	private final Dimension DIM = new Dimension(800,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
 	private final int FPS = 10;
 	public Timer timer = new Timer(1000 / FPS, this);
@@ -100,7 +100,7 @@ public class BowmanGame implements ActionListener {
 		if(ev.getSource()==timer){
 			panel.repaint();
 			if(BowmanWorld.arrowShot == true) {
-				if(BowmanWorld.left == LENGTH - 800) {
+				if(BowmanWorld.left == 800) {
 				}
 				else {
 					BowmanWorld.left += 25;
