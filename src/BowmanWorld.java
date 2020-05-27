@@ -161,9 +161,9 @@ public class BowmanWorld {
 	}
 
 	public static double findSpeed() {
-		int diffinX = clickX - releaseX;
-		int diffInY = releaseY - clickY;
-		return  Math.sqrt(diffInY^2+diffinX^2);
+		int diffX = clickX - releaseX;
+		int diffY = releaseY - clickY;
+		return  Math.sqrt(diffY^2+diffX^2);
 
 
 		}
