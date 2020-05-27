@@ -1,5 +1,9 @@
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 
 public class BowmanWorld {
 	private static Square[][] bigGrid; //this is the 2d array that keeps track of all the squares in the game
@@ -16,6 +20,8 @@ public class BowmanWorld {
 	private int diffInY; //this is the difference between clickY and releaseY
 	private int  diffinX; //this is the difference between clickx and release X
 	private static double count = 0;
+	private static int stopper =1;
+	private static int finalXLoc;
 
 
 	public BowmanWorld() {
@@ -102,14 +108,18 @@ public class BowmanWorld {
 	}
 
 	public void draw(Graphics g) {
-		updateGrid();
+		//
 		for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = 0; c < smallGrid[r].length; c++) {
 				if(c < smallGrid[r].length) {
 					smallGrid[r][c].draw(g);
+					
 				}
 			}
 		}
+		updateGrid();
+		
+	//	g.drawLine(clickX, clickY, releaseX, releaseY);
 	}
 
 	private static void updateGrid() {
@@ -132,11 +142,23 @@ public class BowmanWorld {
 //					smallGrid[r][c] = bigGrid[r][c + (arrowXLocation - c)];
 //			}
 //		}
-		for(int r = 0; r < smallGrid.length; r++) {
-			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
-					smallGrid[r][c - arrowXLocation +325] = bigGrid[r][c];
+		int x = arrowXLocation -325;
+		for(int r = 0; r<smallGrid.length;r++) {
+			for(int c=arrowXLocation-325; c<arrowXLocation+475; c++) {
+				
+			//	smallGrid[r][c-arrowXLocation+324] = smallGrid[r][c-arrowXLocation+325];
+				smallGrid[r][c-arrowXLocation+325] = bigGrid[r][c+100];
+				
+
 			}
 		}
+		
+	/*	for(int r = 0; r < smallGrid.length; r++) {
+			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
+					smallGrid[r][c -arrowXLocation+325] = bigGrid[r][c];
+
+			}
+		}*/
 	}
 
 	public void justClicked(MouseEvent me) {
@@ -147,50 +169,63 @@ public class BowmanWorld {
 	public void releasedAt(MouseEvent me) {
 		releaseX = me.getX();
 		releaseY = me.getY();
+		
 		arrowHasBeenShot = true;
-	}
 
+		
+	}
+/*public void paintLine(Graphics g) {
+	g.drawLine(clickX, clickY, releaseX, releaseY);
+}
+*/
 	public static double findAngle() {
 		double diffinX  = clickX - releaseX;
 		double diffInY = releaseY - clickY;
 		if(diffinX!=0) {
 
 		return Math.atan((diffInY/diffinX));
+		
 		}
 		return -1;
 	}
 
 	public static double findSpeed() {
+
 		int diffX = clickX - releaseX;
 		int diffY = releaseY - clickY;
-		return  Math.sqrt(diffY^2+diffX^2);
+		return  Math.sqrt(diffY^2+diffX^2)*1.5;
 
 
 		}
-
+	
 
 	public static void moveRocket() {
-
+		
 		count+= .25;
-
-		arrowXLocation += (Math.cos(findAngle()) * findSpeed());
-
+		
 		arrowYLocation += -(Math.sin(findAngle()) * findSpeed() -count);
+		
 
+		arrowXLocation += (Math.cos(findAngle()) * findSpeed()) *stopper;
+
+		System.out.println(arrowXLocation);
+		
 		if(arrowYLocation > 550) {
 			arrowYLocation = 552;
-			arrowXLocation = 30;
+			stopper = 0;
+			finalXLoc = arrowXLocation;
 		}
+	
 
 
 
-		if(arrowYLocation <= 550) {
+		
 		drawRocket();
-		}
-		if(arrowXLocation>= smallGrid[0].length) {
-			updateGrid();
-		}
+		
+		
+		
 	}
+	
 
 	/**
 	 *I made the rocket a square of 5 by 5 for now
