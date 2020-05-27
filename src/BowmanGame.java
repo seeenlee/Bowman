@@ -70,11 +70,6 @@ public class BowmanGame implements ActionListener {
 			public void mouseReleased(MouseEvent me) {
 				releasedAt(me);
 			}
-
-			@Override
-			public void mouseDragged(MouseEvent me) {
-				draggedAt(me);
-			}
 		});
 		panel.setPreferredSize(DIM);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -84,42 +79,24 @@ public class BowmanGame implements ActionListener {
 		panel.repaint();
 	}
 
-	protected void draggedAt(MouseEvent me) {
-		world.draggedAt(me);
-		System.out.println("this happened");
-	}
-
-	protected void releasedAt(MouseEvent me) {
-		world.releasedAt(me);
-	}
-
 	/**
 	 * This method checks if the FPS time limit has passed and then repaints the screen
 	 */
 	public void actionPerformed(ActionEvent ev){
 		if(ev.getSource()==timer){
-			if(BowmanWorld.arrowShot == true) {
+			if(BowmanWorld.getArrowHasBeenShot() == true) {
 				BowmanWorld.moveRocket();
-				BowmanWorld.gravityCounter++;
+				BowmanWorld.increaseGravityCounter();
 			}
 			panel.repaint();
-			/*
-			if(BowmanWorld.arrowShot == true) {
-<<<<<<< HEAD
-				if(BowmanWorld.arrowLocation == LENGTH - 800) {
-=======
-				if(BowmanWorld.left == 800) {
->>>>>>> 8e580ff579c93d989c33a06a2f72ba9024f8f767
-				}
-				else {
-					BowmanWorld.arrowLocation += 25;
-				}
-			}
-			*/
 		}
 	}
 
 	protected void clickedAt(MouseEvent me) {
 		world.justClicked(me);
+	}
+	
+	protected void releasedAt(MouseEvent me) {
+		world.releasedAt(me);
 	}
 }
