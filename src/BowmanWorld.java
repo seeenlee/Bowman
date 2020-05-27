@@ -15,29 +15,29 @@ public class BowmanWorld {
 	private static int releaseY;
 	private static int diffInY; //this is the difference between clickY and releaseY
 	private static int  diffinX; //this is the difference between clickx and release X
-	
-	
+
+
 	public BowmanWorld() {
 		bigGrid = new Square[BowmanGame.getHeight()][BowmanGame.getLength()];
 		smallGrid = new Square[BowmanGame.getHeight()][BowmanGame.getLength() - 1200];
 	}
-	
+
 	public int getArrowXLocation() {
 		return arrowXLocation;
 	}
-	
+
 	public int getArrowYLocation() {
 		return arrowYLocation;
 	}
-	
+
 	public static boolean getArrowHasBeenShot() {
 		return arrowHasBeenShot;
 	}
-	
+
 	public int getGravityCounter() {
 		return gravityCounter;
 	}
-	
+
 	public static void increaseGravityCounter() {
 		gravityCounter++;
 	}
@@ -53,7 +53,7 @@ public class BowmanWorld {
 		createTank(1775);
 		fillSmallGrid();
 	}
-	
+
 	/**
 	 * This grid was supposed to fill the small grid at the beginning
 	 * however i think this method is redundant because updategrid gets called the first time through as well
@@ -78,7 +78,7 @@ public class BowmanWorld {
 			}
 		}
 	}
-	
+
 	private static void createTank(int first) {
 		for(int r = groundLevel - 20; r < groundLevel; r++) {
 			for(int c = first; c < first + 100; c++) {
@@ -110,15 +110,29 @@ public class BowmanWorld {
 			}
 		}
 	}
-	
-	/**
-	 * I have no idea how to do this
-	 * akshay its all yours
-	 */
+
 	private void updateGrid() {
+		int row = 0;
+		int col = 0;
+//		for(int r = 0; r < smallGrid.length; r++) {
+//			for( int c = arrowXLocation- 325; c < arrowXLocation + 475; c++) {
+//				smallGrid[row][col] = bigGrid[r][c];
+//				if(col < 799) {
+//					col++;
+//				}
+//				else {
+//				}
+//			}
+//			row++;
+//		}
+//		for(int r = 0; r < smallGrid.length; r++) {
+//			for( int c = 0; c < smallGrid[r].length; c++) {
+//					smallGrid[r][c] = bigGrid[r][c + (arrowXLocation - c)];
+//			}
+//		}
 		for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
-					smallGrid[r][arrowXLocation - c] = bigGrid[r][c];
+					smallGrid[r][c - arrowXLocation +325] = bigGrid[r][c];
 			}
 		}
 	}
@@ -137,7 +151,7 @@ public class BowmanWorld {
 	public static double findAngle() {
 		diffinX  = clickX - releaseX;
 		diffInY = releaseY - clickY;
-		return Math.atan(diffInY + 0.0/diffinX);
+		return Math.atan((diffInY +0.0)/diffinX);
 	}
 
 	public static double findSpeed() {
@@ -145,24 +159,20 @@ public class BowmanWorld {
 	}
 
 	public static void moveRocket() {
-		arrowXLocation += Math.cos(findAngle()) * findSpeed() * (1.0/15) * 1000;
-		//arrowYLocation += Math.sin(findAngle()) * findSpeed() * (1.0/15) - 9.8 * (gravityCounter/15.0);//idk how to calculate the effect gravity this line needs to be changed
-		arrowYLocation++;
-		/*if(arrowYLocation < groundLevel) {
-			arrowHasBeenShot = false;
-		}*/
-		//else {
-			drawRocket();
+		//arrowXLocation += Math.cos(findAngle()) * findSpeed() * (1.0/15) ;
+		//arrowYLocation += Math.sin(findAngle()) * findSpeed() * (-1.0/15) - 9.8 * (gravityCounter/15.0);//idk how to calculate the effect gravity this line needs to be changed
+		arrowXLocation++;
+		arrowYLocation--;
+		drawRocket();
 		//}
 	}
-	
+
 	/**
 	 *I made the rocket a square of 5 by 5 for now
 	 */
 	private static void drawRocket() {
 		for(int r = arrowYLocation - 5; r < arrowYLocation; r++) {
 			for(int c = arrowXLocation -5; c < arrowXLocation; c++) {
-				System.out.println(r + " " + c);
 				bigGrid[r][c] = new Rocket(r,c);
 			}
 		}
