@@ -103,7 +103,7 @@ public class BowmanWorld {
 	public void draw(Graphics g) {
 		updateGrid();
 		for(int r = 0; r < smallGrid.length; r++) {
-			for( int c = arrowXLocation - 325; c < arrowXLocation +475; c++) {
+			for( int c = 0; c < smallGrid[r].length; c++) {
 				if(c < smallGrid[r].length) {
 					smallGrid[r][c].draw(g);
 				}
@@ -116,13 +116,11 @@ public class BowmanWorld {
 	 * akshay its all yours
 	 */
 	private void updateGrid() {
-		/*
 		for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
 					smallGrid[r][arrowXLocation - c] = bigGrid[r][c];
 			}
 		}
-		*/
 	}
 
 	public void justClicked(MouseEvent me) {
@@ -148,8 +146,14 @@ public class BowmanWorld {
 
 	public static void moveRocket() {
 		arrowXLocation += Math.cos(findAngle()) * findSpeed() * (1.0/15) * 1000;
-		arrowYLocation += Math.sin(findAngle()) * findSpeed() * (-1.0/15) - 9.8 * (gravityCounter/15.0);//idk how to calculate the effect gravity this line needs to be changed
-		drawRocket();
+		//arrowYLocation += Math.sin(findAngle()) * findSpeed() * (1.0/15) - 9.8 * (gravityCounter/15.0);//idk how to calculate the effect gravity this line needs to be changed
+		arrowYLocation++;
+		/*if(arrowYLocation < groundLevel) {
+			arrowHasBeenShot = false;
+		}*/
+		//else {
+			drawRocket();
+		//}
 	}
 	
 	/**
@@ -158,6 +162,7 @@ public class BowmanWorld {
 	private static void drawRocket() {
 		for(int r = arrowYLocation - 5; r < arrowYLocation; r++) {
 			for(int c = arrowXLocation -5; c < arrowXLocation; c++) {
+				System.out.println(r + " " + c);
 				bigGrid[r][c] = new Rocket(r,c);
 			}
 		}
