@@ -13,8 +13,9 @@ public class BowmanWorld {
 	private static int clickY;
 	private static int releaseX;
 	private static int releaseY;
-	private static int diffInY; //this is the difference between clickY and releaseY
-	private static int  diffinX; //this is the difference between clickx and release X
+	private int diffInY; //this is the difference between clickY and releaseY
+	private int  diffinX; //this is the difference between clickx and release X
+	private static double count = 0;
 
 
 	public BowmanWorld() {
@@ -111,9 +112,10 @@ public class BowmanWorld {
 		}
 	}
 
-	private void updateGrid() {
+	private static void updateGrid() {
 		int row = 0;
 		int col = 0;
+
 //		for(int r = 0; r < smallGrid.length; r++) {
 //			for( int c = arrowXLocation- 325; c < arrowXLocation + 475; c++) {
 //				smallGrid[row][col] = bigGrid[r][c];
@@ -149,22 +151,45 @@ public class BowmanWorld {
 	}
 
 	public static double findAngle() {
-		diffinX  = clickX - releaseX;
-		diffInY = releaseY - clickY;
-		return Math.atan((diffInY +0.0)/diffinX);
+		double diffinX  = clickX - releaseX;
+		double diffInY = releaseY - clickY;
+		if(diffinX!=0) {
+
+		return Math.atan((diffInY/diffinX));
+		}
+		return -1;
 	}
 
 	public static double findSpeed() {
-		return Math.sqrt(diffInY^2+diffinX^2);
-	}
+		int diffinX = clickX - releaseX;
+		int diffInY = releaseY - clickY;
+		return  Math.sqrt(diffInY^2+diffinX^2);
+
+
+		}
+
 
 	public static void moveRocket() {
-		//arrowXLocation += Math.cos(findAngle()) * findSpeed() * (1.0/15) ;
-		//arrowYLocation += Math.sin(findAngle()) * findSpeed() * (-1.0/15) - 9.8 * (gravityCounter/15.0);//idk how to calculate the effect gravity this line needs to be changed
-		arrowXLocation++;
-		arrowYLocation--;
+
+		count+= .25;
+
+		arrowXLocation += (Math.cos(findAngle()) * findSpeed());
+
+		arrowYLocation += -(Math.sin(findAngle()) * findSpeed() -count);
+
+		if(arrowYLocation > 550) {
+			arrowYLocation = 552;
+			arrowXLocation = 30;
+		}
+
+
+
+		if(arrowYLocation <= 550) {
 		drawRocket();
-		//}
+		}
+		if(arrowXLocation>= smallGrid[0].length) {
+			updateGrid();
+		}
 	}
 
 	/**
@@ -173,6 +198,7 @@ public class BowmanWorld {
 	private static void drawRocket() {
 		for(int r = arrowYLocation - 5; r < arrowYLocation; r++) {
 			for(int c = arrowXLocation -5; c < arrowXLocation; c++) {
+
 				bigGrid[r][c] = new Rocket(r,c);
 			}
 		}
