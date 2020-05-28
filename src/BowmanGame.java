@@ -14,7 +14,7 @@ public class BowmanGame implements ActionListener {
 	private JFrame frame = new JFrame("Bowman");
 	private JPanel panel;
 	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
-	private final static int LENGTH = 2000;
+	private final static int LENGTH = 2475;
 	private final static int HEIGHT = 600;
 	private final Dimension DIM = new Dimension(1920,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
@@ -50,7 +50,7 @@ public class BowmanGame implements ActionListener {
 	 * I don't actually know what all these commands do
 	 */
 	private void start() {
-		BowmanWorld.setUpGame();
+		world.setUpGame();
 		timer.start();
 		panel = new JPanel() {
 			@Override 
@@ -84,9 +84,10 @@ public class BowmanGame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent ev){
 		if(ev.getSource()==timer){
-			if(BowmanWorld.getArrowHasBeenShot() == true) {
-				BowmanWorld.moveRocket();
-				BowmanWorld.increaseGravityCounter();
+			if(world.getArrowHasBeenShot() == true) {
+				world.moveRocket();
+				world.updateGrid();
+				world.increaseGravityCounter();
 			}
 			panel.repaint();
 		}

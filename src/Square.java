@@ -13,6 +13,7 @@ public abstract class Square {
 	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillRect(col, row, 1, 1);
+		System.out.println("sqaures:" + col);
 	}
 	
 	public void setCol(int col) {
