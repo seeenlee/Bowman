@@ -109,6 +109,7 @@ public class BowmanWorld {
 
 	public void draw(Graphics g) {
 		//
+		updateGrid();
 		for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = 0; c < smallGrid[r].length; c++) {
 				if(c < smallGrid[r].length) {
@@ -117,7 +118,6 @@ public class BowmanWorld {
 				}
 			}
 		}
-		updateGrid();
 		
 	//	g.drawLine(clickX, clickY, releaseX, releaseY);
 	}
@@ -148,6 +148,8 @@ public class BowmanWorld {
 				
 			//	smallGrid[r][c-arrowXLocation+324] = smallGrid[r][c-arrowXLocation+325];
 				smallGrid[r][c-arrowXLocation+325] = bigGrid[r][c+100];
+				smallGrid[r][c-arrowXLocation+325].setCol(c+100);
+				smallGrid[r][c-arrowXLocation+325].setRow(r);
 				
 
 			}
