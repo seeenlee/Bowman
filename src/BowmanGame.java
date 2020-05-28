@@ -16,7 +16,7 @@ public class BowmanGame implements ActionListener {
 	public static final int OFFSET_X = 40, OFFSET_Y = 20; 
 	private final static int LENGTH = 2000;
 	private final static int HEIGHT = 600;
-	private final Dimension DIM = new Dimension(800,HEIGHT);
+	private final Dimension DIM = new Dimension(1920,HEIGHT);
 	private BowmanWorld world = new BowmanWorld();
 	private final int FPS = 10;
 	public Timer timer = new Timer(1000 / FPS, this);

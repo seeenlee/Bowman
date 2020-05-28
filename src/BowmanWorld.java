@@ -123,8 +123,8 @@ public class BowmanWorld {
 	}
 
 	private static void updateGrid() {
-		int row = 0;
-		int col = 0;
+		//int row = 0;
+		//int col = 0;
 
 //		for(int r = 0; r < smallGrid.length; r++) {
 //			for( int c = arrowXLocation- 325; c < arrowXLocation + 475; c++) {
@@ -142,7 +142,7 @@ public class BowmanWorld {
 //					smallGrid[r][c] = bigGrid[r][c + (arrowXLocation - c)];
 //			}
 //		}
-		int x = arrowXLocation -325;
+		//int x = arrowXLocation -325;
 		for(int r = 0; r<smallGrid.length;r++) {
 			for(int c=arrowXLocation-325; c<arrowXLocation+475; c++) {
 				
@@ -209,7 +209,10 @@ public class BowmanWorld {
 		arrowXLocation += (Math.cos(findAngle()) * findSpeed()) *stopper;
 
 		System.out.println(arrowXLocation);
-		
+		if(arrowXLocation > 1999) {
+			arrowXLocation = 1999;
+			arrowHasBeenShot = false;
+		}
 		if(arrowYLocation > 550) {
 			arrowYLocation = 552;
 			stopper = 0;

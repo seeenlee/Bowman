@@ -14,4 +14,20 @@ public abstract class Square {
 		g.setColor(color);
 		g.fillRect(col, row, 1, 1);
 	}
+	
+	public void setCol(int col) {
+		this.col = col;
+	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
+	public int getCol() {
+		return col;
+	}
+	
+	public int getRow() {
+		return col;
+	}
 }
