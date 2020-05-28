@@ -150,9 +150,9 @@ public class BowmanWorld {
 				//	smallGrid[r][c-arrowXLocation+324] = smallGrid[r][c-arrowXLocation+325];
 
 				try {
-					smallGrid[r][c] = bigGrid[r][arrowXLocation -325];
+					smallGrid[r][c] = bigGrid[r][arrowXLocation -325 + c];
 					smallGrid[r][c].setCol(c);
-					System.out.println("c:" + c);
+					//System.out.println("c:" + c);
 				}
 				catch(Exception e) {
 					e.printStackTrace();	
@@ -216,10 +216,10 @@ public class BowmanWorld {
 		arrowYLocation += -(Math.sin(findAngle()) * findSpeed() -count);
 
 
-		//arrowXLocation += (Math.cos(findAngle()) * findSpeed()) *stopper;
-		arrowXLocation++;
-		System.out.println("x:" +arrowXLocation);
-		System.out.println("y:"+ arrowYLocation);
+		arrowXLocation += (Math.cos(findAngle()) * findSpeed()) *stopper;
+		//arrowXLocation++;
+		//System.out.println("x:" +arrowXLocation);
+		//System.out.println("y:"+ arrowYLocation);
 		//		if(arrowXLocation > 1999) {
 		//			arrowXLocation = 1999;
 		//			arrowHasBeenShot = false;
