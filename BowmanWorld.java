@@ -12,6 +12,8 @@ public class BowmanWorld {
 	private  int arrowXLocation = 325; //the x value of the location of the arrow
 	private  int arrowYLocation = groundLevel - 10; //the y value of the location of the arrow
 	
+	private int arrowYLocation2 = groundLevel - 10;
+	
 	private int arrowXLocation2 = 1775;
 	private  boolean arrowHasBeenShot = false; //this boolean will show if the arrow has been shot, after it makes contact with ground or edgelimit it needs to be changed back to false
 	private  double gravityCounter = 0; //I made this variable to count how much time has passed to calculate the variable of gravity but i think it might end up being useless
@@ -19,6 +21,12 @@ public class BowmanWorld {
 	private  int clickY;
 	private  int releaseX;
 	private  int releaseY;
+	
+	private int clickX2;
+	private int clickY2;
+	private int releaseX2;
+	private int releaseY2;
+	private boolean arrow2HasBeenShot = false;
 	//private int diffInY; //this is the difference between clickY and releaseY
 	//private int  diffinX; //this is the difference between clickx and release X
 	private double count = 0;
@@ -258,6 +266,48 @@ public class BowmanWorld {
 
 	}
 	
+	
+	public void justClicked2(MouseEvent me) {
+		clickX2 = me.getX();
+		clickY2 = me.getY();
+	}
+
+	public void releasedAt2(MouseEvent me) {
+		releaseX2 = me.getX();
+		releaseY2 = me.getY();
+
+		arrow2HasBeenShot = true;
+
+
+	}
+	
+	public double findAngle2() {
+		double diffinX  = clickX2 - releaseX2;
+		double diffInY = releaseY2 - clickY2;
+		if(diffinX!=0) {
+
+			return Math.atan((diffInY/diffinX));
+
+		}
+		return -1;
+	}
+	
+	public double findSpeed2() {
+
+		int diffX = clickX2 - releaseX2;
+		int diffY = releaseY2 - clickY2;
+		//return  Math.sqrt(diffY^2+diffX^2)*1.5;
+		//return  Math.sqrt((diffY * diffY) +(diffX * diffX))*1.5;
+		
+		
+		//System.out.println("speed:"+Math.sqrt(Math.pow(diffinX, 2.0) + Math.pow(diffInY, 2.0)) * .05);
+		String s = String.format("%.2f", Math.pow(diffX, 2.0) + Math.pow(diffY, 2.0) * .05);
+		return Math.sqrt(Math.pow(diffX, 2.0) + Math.pow(diffY, 2.0)) * .05;
+		//return Math.sqrt(Math.pow(diffinX, 2.0) + Math.pow(diffInY, 2.0)) * .05;
+
+	}
+	
+	
 	public void moveRocket2() {
 		count += .25;	
 		
@@ -267,7 +317,7 @@ public class BowmanWorld {
 		System.out.println("adding p2:" + s);
 		
 		
-		arrowXLocation2 -= (Math.cos(/*player 2/ai .getangle*/) * /*player 2/ai .getstrength*/);
+		arrowXLocation -= (Math.cos(/*player 2/ai .getangle*/) * /*player 2/ai .getstrength*/);
 		
 		System.out.println("p2 coords: " + arrowXLocation2 + "," + arrowYLocation);
 		//arrowXLocation++;
@@ -275,11 +325,11 @@ public class BowmanWorld {
 		//System.out.println("y:"+ arrowYLocation);
 				if(arrowXLocation < 1) {
 					arrowXLocation = 1;
-					arrowHasBeenShot = false;
+					arrow2HasBeenShot = false;
 				}
 		if(arrowYLocation > groundLevel) {
 			arrowYLocation = groundLevel;
-			arrowHasBeenShot = false;
+			arrow2HasBeenShot = false;
 			//finalXLoc = arrowXLocation;
 		}
 	}
