@@ -89,6 +89,9 @@ public class BowmanGame implements ActionListener {
 				world.moveRocket();
 				world.updateGrid();
 			}
+			if(world.getArrowHasBeenShot() == false) {
+				world.updateGrid();
+			}
 			panel.repaint();
 		}
 	}
