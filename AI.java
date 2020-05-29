@@ -7,7 +7,7 @@ public class AI {
 	private double currStrength = 0;
 	private double currAngle = 0;
 	
-	public double strength(int xvalue) {
+	public double strength() {
 		
 		if (firstStrength) {
 			Random r = new Random();
@@ -32,23 +32,23 @@ public class AI {
 		
 	}
 	
-	public double angle(int xvalue) {
+	public double angle() {
 		
 		if (firstAngle) {
 			Random r = new Random();
 			firstAngle = false;
-			currAngle = 180 - r.nextInt(70) + 1;
-			return 180 - r.nextInt(70) + 1;
+			currAngle = r.nextInt(70) + 1;
+			return r.nextInt(70) + 1;
 		}
 		else {
 			//get the arrow's position and subtract it from the position of the tank
 			
 			if ( /* tank - arrow */ > 0) {  //overshot 
-				currAngle += 5;
+				currAngle -= 5;
 				return currAngle;
 			}
 			else {	//undershot or hit
-				currAngle -= 5;
+				currAngle += 5;
 				return currAngle;
 			}
 				
