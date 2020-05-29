@@ -37,18 +37,18 @@ public class AI {
 		if (firstAngle) {
 			Random r = new Random();
 			firstAngle = false;
-			currAngle = r.nextInt(70) + 1;
-			return r.nextInt(70) + 1;
+			currAngle = 180 - r.nextInt(70) + 1;
+			return 180 - r.nextInt(70) + 1;
 		}
 		else {
 			//get the arrow's position and subtract it from the position of the tank
 			
 			if ( /* tank - arrow */ > 0) {  //overshot 
-				currAngle -= 5;
+				currAngle += 5;
 				return currAngle;
 			}
 			else {	//undershot or hit
-				currAngle += 5;
+				currAngle -= 5;
 				return currAngle;
 			}
 				
