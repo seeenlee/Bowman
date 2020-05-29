@@ -20,6 +20,8 @@ public class BowmanGame implements ActionListener {
 	public BowmanWorld world = new BowmanWorld();
 	private final int FPS = 10;
 	public Timer timer = new Timer(1000 / FPS, this);
+	public static int countDown;
+	public boolean firstTime = true;
 
 	/**
 	 * This method exists purely to call start
@@ -56,6 +58,10 @@ public class BowmanGame implements ActionListener {
 			@Override 
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				//world.saveGraphic(g);
+				if(firstTime) {
+					world.drawSetUpScreen(g);
+				}
 				world.draw(g);
 			}
 		};
@@ -85,6 +91,15 @@ public class BowmanGame implements ActionListener {
 	public void actionPerformed(ActionEvent ev){
 		int count = 0;
 		if(ev.getSource()==timer){
+			
+			if(countDown > 0) {
+				countDown--;
+				if(countDown == 0) {
+					world.resetArrow();
+					world.updateGrid();
+				}
+				return;
+			}
 			if(world.getArrowHasBeenShot() == true) {
 				world.increaseGravityCounter();
 				if(world.getPlayTurn()) {
@@ -104,14 +119,14 @@ public class BowmanGame implements ActionListener {
 				}
 				world.updateGrid();
 			}
-			if(world.getArrowHasBeenShot() == false) {
-				world.updateGrid();
-			}
 			panel.repaint();
 		}
 	}
 
 	protected void clickedAt(MouseEvent me) {
+		if(firstTime) {
+			firstTime = false;
+		}
 		world.justClicked(me);
 	}
 

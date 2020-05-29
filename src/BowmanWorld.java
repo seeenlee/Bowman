@@ -1,8 +1,15 @@
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 import java.awt.Point;
@@ -80,7 +87,7 @@ public class BowmanWorld {
 	}
 
 	public void increaseGravityCounter() {
-		gravityCounter+= .25;
+		gravityCounter += .5;
 	}
 
 	public void resetGravityCounter() {
@@ -96,7 +103,8 @@ public class BowmanWorld {
 		createGround(groundLevel);
 		createTank(tankOneLocation);
 		createTank(tankTwoLocation);
-		fillSmallGrid();
+		//fillSmallGrid();
+		updateGrid();
 	}
 
 	/**
@@ -118,10 +126,10 @@ public class BowmanWorld {
 					//bigGrid[r][c] = new EdgeLimit(r,c);
 					bigGrid[r][c] = new Air(r,c);
 				}
-				else if(c > rightLimit && c < rightLimit + 5 && r < groundLevel){
-					//bigGrid[r][c] = new EdgeLimit(r,c);
-					bigGrid[r][c] = new Air(r,c);
-				}
+//				else if(c > rightLimit && c < rightLimit + 5 && r < groundLevel){
+//					//bigGrid[r][c] = new EdgeLimit(r,c);
+//					bigGrid[r][c] = new Air(r,c);
+//				}
 				else if(r > 0 && c > leftLimit && r < groundLevel&& c < rightLimit){
 					bigGrid[r][c] = new Air(r,c);
 				}
@@ -196,7 +204,9 @@ public class BowmanWorld {
 				}
 			}
 		}
-
+		if(BowmanGame.countDown > 0) {
+			g.drawString("bruh", 350, 350);
+		}
 		//	g.drawLine(clickX, clickY, releaseX, releaseY);
 	}
 
@@ -233,7 +243,9 @@ public class BowmanWorld {
 					//System.out.println("c:" + c);
 				}
 				catch(Exception e) {
-					e.printStackTrace();	
+					e.printStackTrace();
+					System.out.println(c);
+					System.out.println(arrowXLocation);
 					return;
 				}
 
@@ -243,7 +255,6 @@ public class BowmanWorld {
 		/*	for(int r = 0; r < smallGrid.length; r++) {
 			for( int c = arrowXLocation - 325; c < arrowXLocation + 475; c++) {
 					smallGrid[r][c -arrowXLocation+325] = bigGrid[r][c];
-
 			}
 		}*/
 		drawRocket();
@@ -300,8 +311,7 @@ public class BowmanWorld {
 
 		//count+= .25;
 		//increaseGravityCounter();
-
-		arrowYLocation += -(Math.sin(findAngle()) * findSpeed() -gravityCounter);
+		arrowYLocation -= (Math.sin(findAngle()) * findSpeed() -gravityCounter);
 		String s = String.format("%.2f",  -(Math.sin(findAngle()) * findSpeed() -gravityCounter));
 		//System.out.println("adding:" + s);
 		arrowXLocation += (Math.cos(findAngle()) * findSpeed());
@@ -322,6 +332,7 @@ public class BowmanWorld {
 //		}
 		if(hitBarrier(arrowXLocation, arrowYLocation)) {
 			turnOver();
+			return;
 		}
 		//		findTanks();
 		//		for(int i = 0; i < tankLocations.size(); i++) {
@@ -353,6 +364,10 @@ public class BowmanWorld {
 		lastShot = arrowXLocation;
 		resetGravityCounter();
 		playTurn = !playTurn;
+		BowmanGame.countDown = 20;
+	}
+	
+	public void resetArrow() {
 		if(playTurn == true) {
 			arrowXLocation = 600;
 			arrowYLocation = groundLevel - 10;
@@ -425,22 +440,22 @@ public class BowmanWorld {
 //		}
 //	}
 	
-	public void justClicked2(MouseEvent me) {
-		clickX = me.getX();
-		clickY = me.getY();
-	}
-
-	public void releasedAt2(MouseEvent me) {
-		releaseX = me.getX();
-		releaseY = me.getY();
-
-		arrowHasBeenShot = true;
-
-
-	}
+//	public void justClicked2(MouseEvent me) {
+//		clickX2 = me.getX();
+//		clickY2 = me.getY();
+//	}
+//
+//	public void releasedAt2(MouseEvent me) {
+//		releaseX2 = me.getX();
+//		releaseY2 = me.getY();
+//
+//		arrowHasBeenShot = true;
+//
+//
+//	}
 	
 	public double findAngle2() {
-		double diffinX  = releaseX - clickX;
+		double diffinX  = clickX - releaseX;
 		double diffInY = releaseY - clickY;
 		if(diffinX!=0) {
 
@@ -467,10 +482,11 @@ public class BowmanWorld {
 	
 	
 	public void moveRocket2() {
-		increaseGravityCounter();	
 		
-		arrowYLocation += -(Math.sin(findAngle2()) * findSpeed2()/ -gravityCounter);
+		increaseGravityCounter();
+		arrowYLocation -= (Math.sin(findAngle2()) * findSpeed2() -gravityCounter);
 		String s = String.format("%.2f",  -(Math.sin(findAngle2()) * findSpeed2() -gravityCounter));
+		
 		arrowXLocation -= (Math.cos(findAngle2()) * findSpeed2());
 		if(hitBarrier(arrowXLocation, arrowYLocation)) {
 			turnOver();
@@ -556,4 +572,8 @@ public class BowmanWorld {
 		}
 	}
 
+	public void drawSetUpScreen(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
 }
