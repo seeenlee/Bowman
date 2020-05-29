@@ -17,7 +17,7 @@ public class BowmanGame implements ActionListener {
 	private final static int LENGTH = 2500;
 	private final static int HEIGHT = 600;
 	private final Dimension DIM = new Dimension(800,HEIGHT);
-	private BowmanWorld world = new BowmanWorld();
+	public BowmanWorld world = new BowmanWorld();
 	private final int FPS = 10;
 	public Timer timer = new Timer(1000 / FPS, this);
 
@@ -83,10 +83,25 @@ public class BowmanGame implements ActionListener {
 	 * This method checks if the FPS time limit has passed and then repaints the screen
 	 */
 	public void actionPerformed(ActionEvent ev){
+		int count = 0;
 		if(ev.getSource()==timer){
 			if(world.getArrowHasBeenShot() == true) {
 				world.increaseGravityCounter();
-				world.moveRocket();
+				if(world.getPlayTurn()) {
+					world.moveRocket();
+				}
+				else {
+					if(world.getHumanHuman()) {
+						world.moveRocket2();
+					}
+//					else {
+//						count++;
+//						if(count == 30) {
+//							world.moveRocket2AI();
+//							count = 0;
+//						}
+//					}
+				}
 				world.updateGrid();
 			}
 			if(world.getArrowHasBeenShot() == false) {
@@ -99,8 +114,9 @@ public class BowmanGame implements ActionListener {
 	protected void clickedAt(MouseEvent me) {
 		world.justClicked(me);
 	}
-	
+
 	protected void releasedAt(MouseEvent me) {
 		world.releasedAt(me);
 	}
+
 }
