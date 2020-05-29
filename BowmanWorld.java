@@ -282,7 +282,7 @@ public class BowmanWorld {
 	}
 	
 	public double findAngle2() {
-		double diffinX  = clickX2 - releaseX2;
+		double diffinX  = releaseX2 - clickX2;
 		double diffInY = releaseY2 - clickY2;
 		if(diffinX!=0) {
 
@@ -294,7 +294,7 @@ public class BowmanWorld {
 	
 	public double findSpeed2() {
 
-		int diffX = clickX2 - releaseX2;
+		int diffX = releaseX2 - clickX2;
 		int diffY = releaseY2 - clickY2;
 		//return  Math.sqrt(diffY^2+diffX^2)*1.5;
 		//return  Math.sqrt((diffY * diffY) +(diffX * diffX))*1.5;
