@@ -10,18 +10,18 @@ public class BowmanWorld {
 	private  Square[][] smallGrid; //this is the 2d array that is displayed, it will take values from the bigGrid to display
 	private final  int groundLevel = 550; //this is the height where the ground is drawn
 	private  int arrowXLocation = 325; //the x value of the location of the arrow
-	private  int arrowYLocation = groundLevel; //the y value of the location of the arrow
+	private  int arrowYLocation = groundLevel - 10; //the y value of the location of the arrow
 	private  boolean arrowHasBeenShot = false; //this boolean will show if the arrow has been shot, after it makes contact with ground or edgelimit it needs to be changed back to false
-	private  int gravityCounter = 0; //I made this variable to count how much time has passed to calculate the variable of gravity but i think it might end up being useless
+	private  double gravityCounter = 0; //I made this variable to count how much time has passed to calculate the variable of gravity but i think it might end up being useless
 	private  int clickX;
 	private  int clickY;
 	private  int releaseX;
 	private  int releaseY;
-	private int diffInY; //this is the difference between clickY and releaseY
-	private int  diffinX; //this is the difference between clickx and release X
+	//private int diffInY; //this is the difference between clickY and releaseY
+	//private int  diffinX; //this is the difference between clickx and release X
 	private double count = 0;
 	private int stopper =1;
-	private int finalXLoc;
+	//private int finalXLoc;
 
 
 	public BowmanWorld() {
@@ -41,12 +41,12 @@ public class BowmanWorld {
 		return arrowHasBeenShot;
 	}
 
-	public int getGravityCounter() {
+	public double getGravityCounter() {
 		return gravityCounter;
 	}
 
 	public void increaseGravityCounter() {
-		gravityCounter++;
+		gravityCounter+= .25;
 	}
 	/**
 	 * Fills in the grid with all the possible blocks
@@ -76,11 +76,17 @@ public class BowmanWorld {
 	private void createEdgeLimitsAndFillWithAir() {
 		for(int r = 0; r < bigGrid.length; r++) {
 			for(int c = 0; c < bigGrid[r].length; c++) {
-				if(r == 0 || c == 0 || r == bigGrid.length - 1|| c == bigGrid[r].length - 1) {
+				if(r == 0 || c == 0 || r == bigGrid.length - 1) {
 					bigGrid[r][c] = new EdgeLimit(r,c);
 				}
-				else {
+				else if(c > 2000 && c < 2005 && r < groundLevel){
+					bigGrid[r][c] = new EdgeLimit(r,c);
+				}
+				else if(r > 0 && c > 100 && r < groundLevel&& c < 2000){
 					bigGrid[r][c] = new Air(r,c);
+				}
+				else {
+					bigGrid[r][c] = new TheBigBlackSpace(r,c);
 				}
 			}
 		}
@@ -188,6 +194,8 @@ public class BowmanWorld {
 	g.drawLine(clickX, clickY, releaseX, releaseY);
 }
 	 */
+//	private double diffinX  = clickX - releaseX;
+//	private double diffInY = releaseY - clickY;
 	public double findAngle() {
 		double diffinX  = clickX - releaseX;
 		double diffInY = releaseY - clickY;
@@ -203,8 +211,14 @@ public class BowmanWorld {
 
 		int diffX = clickX - releaseX;
 		int diffY = releaseY - clickY;
-		return  Math.sqrt(diffY^2+diffX^2)*1.5;
-
+		//return  Math.sqrt(diffY^2+diffX^2)*1.5;
+		//return  Math.sqrt((diffY * diffY) +(diffX * diffX))*1.5;
+		
+		
+		//System.out.println("speed:"+Math.sqrt(Math.pow(diffinX, 2.0) + Math.pow(diffInY, 2.0)) * .05);
+		String s = String.format("%.2f", Math.pow(diffX, 2.0) + Math.pow(diffY, 2.0) * .05);
+		return Math.sqrt(Math.pow(diffX, 2.0) + Math.pow(diffY, 2.0)) * .05;
+		//return Math.sqrt(Math.pow(diffinX, 2.0) + Math.pow(diffInY, 2.0)) * .05;
 
 	}
 
@@ -212,22 +226,24 @@ public class BowmanWorld {
 	public void moveRocket() {
 
 		count+= .25;
+		//increaseGravityCounter();
 
-		arrowYLocation += -(Math.sin(findAngle()) * findSpeed() -count);
-
-
-		arrowXLocation += (Math.cos(findAngle()) * findSpeed()) *stopper;
+		arrowYLocation += -(Math.sin(findAngle()) * findSpeed() -gravityCounter);
+		String s = String.format("%.2f",  -(Math.sin(findAngle()) * findSpeed() -gravityCounter));
+		System.out.println("adding:" + s);
+		arrowXLocation += (Math.cos(findAngle()) * findSpeed());
+		System.out.println(arrowXLocation + "," + arrowYLocation);
 		//arrowXLocation++;
 		//System.out.println("x:" +arrowXLocation);
 		//System.out.println("y:"+ arrowYLocation);
-		//		if(arrowXLocation > 1999) {
-		//			arrowXLocation = 1999;
-		//			arrowHasBeenShot = false;
-		//		}
-		if(arrowYLocation > 800) {
-			arrowYLocation = 552;
-			stopper = 0;
-			finalXLoc = arrowXLocation;
+				if(arrowXLocation > 1999) {
+					arrowXLocation = 1999;
+					arrowHasBeenShot = false;
+				}
+		if(arrowYLocation > groundLevel) {
+			arrowYLocation = groundLevel;
+			arrowHasBeenShot = false;
+			//finalXLoc = arrowXLocation;
 		}
 
 
@@ -249,6 +265,7 @@ public class BowmanWorld {
 			for(int c = 320; c < 325; c++) {
 
 				smallGrid[r][c] = new Rocket(r,c);
+				//System.out.println("drawing:"+ r);
 			}
 		}
 	}
